@@ -4,7 +4,6 @@ class AdvOfCode
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Hello World!");
         DayOne dayOne = new DayOne();
         dayOne.Run();
     }

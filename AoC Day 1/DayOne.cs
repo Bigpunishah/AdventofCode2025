@@ -9,8 +9,6 @@ namespace Advent_Of_Code_2025.AoC_Day_1
     public class DayOne
     {
         private string _inputData = string.Empty; //Read incoming data as string
-        private const string _filePath = @"C:\Users\Vikel\source\repos\Advent_Of_Code_2025\AoC Day 1\InputData.txt"; //File path to incoming
-        //private string _filePath = Path.Combine(AppContext.BaseDirectory, "InputData.txt"); //File path to incoming
         List<int> numbers = new List<int>(); //List to hold the values from the input data
 
         public void Run()
@@ -27,22 +25,24 @@ namespace Advent_Of_Code_2025.AoC_Day_1
             leftNumbers.Sort();
             rightNumbers.Sort();
 
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Total distance: " + ReturnDistance(leftNumbers, rightNumbers));
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Advent of Code Day 1 Executed Successfully!");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private string CopyFile()
         {
             try
             {
-                _inputData = File.ReadAllText(_filePath); //Get all data from 
+                _inputData = File.ReadAllText("AoC Day 1\\InputData.txt"); //Get all data from 
                 Console.WriteLine("File Copied.");
                 return _inputData;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error trying accessing file: {0}", ex.Message);
-                Console.WriteLine("The path it tried: {0}", _filePath);  
+                Console.WriteLine("Error trying accessing file: {0}", ex);
                 return string.Empty;
             }
 
@@ -56,7 +56,6 @@ namespace Advent_Of_Code_2025.AoC_Day_1
                 {
                     //Console.WriteLine(inputData.ToString());
                     //iterating for each numberString, split by space between.
-                    int i = 0;
                     foreach(string numberStr in inputData.Split(new[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries))
                     {
                         numbers.Add(int.Parse(numberStr));
@@ -131,7 +130,7 @@ namespace Advent_Of_Code_2025.AoC_Day_1
             {
                 total += Math.Abs(left[i] - right[i]);
             }
-            Console.WriteLine("Returning Total Distance.");
+            //Console.WriteLine("Returning Total Distance.");
             return total;   
         }
 
