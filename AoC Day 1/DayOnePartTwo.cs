@@ -21,17 +21,40 @@ namespace Advent_Of_Code_2025.AoC_Day_1
      */
     public class DayOnePartTwo : DayOnePartOne
     {
-        private string data = new DayOnePartTwo().CopyFile();
-        private int currentLeftValue;
-        private int currentRightValue;
+        private List<int> leftList = new List<int>();
+        private List<int> rightList = new List<int>();
+        
         private int rightOccurenceToMultiply;
-        private List<int> incomingList = new List<int>();
+        private int total;
 
-        public void Run()
+        public void RunDayOnePartTwo()
         {
-
+            (leftList, rightList) = new DayOnePartOne().PartTwoShortCut();
+            SolveProblemTwo(leftList, rightList);
         }
 
-         
+        public void SolveProblemTwo(List<int> incomingLeftL, List<int> incomingRightL)
+        {
+            int count = int.Max(incomingLeftL.Count, incomingRightL.Count);
+
+            for (int i = 0; i < count; i++)
+            {
+                rightOccurenceToMultiply = 0;
+                for (int j = 0; j < count; j++)
+                {
+                    if (incomingLeftL[i] == incomingRightL[j])
+                    {
+                        rightOccurenceToMultiply++;
+                    }
+                }
+                if(rightOccurenceToMultiply > 0)
+                Console.WriteLine($"{incomingLeftL[i]} Occured: {rightOccurenceToMultiply} time(s)");
+                total += incomingLeftL[i] * rightOccurenceToMultiply;
+            }
+            Console.WriteLine("The job has complete!");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(total);
+            Console.ForegroundColor = ConsoleColor.White;
+        }//End SolveProblemTwo function
     }
 }

@@ -11,7 +11,7 @@ namespace Advent_Of_Code_2025.AoC_Day_1
         private string _inputData = string.Empty; //Read incoming data as string
         List<int> numbers = new List<int>(); //List to hold the values from the input data
 
-        public void Run()
+        public void RunDayOnePartOne()
         {
             //Method to run the code in its entirety.
             List<int> leftNumbers = new List<int>();
@@ -28,6 +28,17 @@ namespace Advent_Of_Code_2025.AoC_Day_1
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Advent of Code Day 1 Executed Successfully!");
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public (List<int>, List<int>) PartTwoShortCut()
+        {
+            string data = CopyFile();
+            List<int> leftNumbers = new List<int>();
+            List<int> rightNumbers = new List<int>();
+            (leftNumbers, rightNumbers) = StringToLeftListAndRightList(data);
+            leftNumbers.Sort();
+            rightNumbers.Sort();
+            return (leftNumbers, rightNumbers);
         }
 
         public string CopyFile()
@@ -130,6 +141,5 @@ namespace Advent_Of_Code_2025.AoC_Day_1
             //Console.WriteLine("Returning Total Distance.");
             return total;   
         }
-
     }
 }
