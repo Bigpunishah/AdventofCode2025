@@ -4,7 +4,7 @@ class AdvOfCode
 {
     public static void Main(string[] args)
     {
-        DayOne dayOne = new DayOne();
-        dayOne.Run();
+        new DayOnePartOne().Run();
+
     }
 }
