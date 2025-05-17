@@ -29,6 +29,7 @@ namespace Advent_Of_Code_2025.AoC_Day_2
         private string _inputData = string.Empty; //Read incoming data as string
         private bool isSafe;
         private int totalSafeFloors = 0;
+        List<string> currentFloorList = new List<string>();
         
         public void RunDayOnePartOne()
         {
@@ -51,8 +52,10 @@ namespace Advent_Of_Code_2025.AoC_Day_2
                     string line = inputReader.ReadLine()!;
                     if (line is not null)
                     {
-                        Array numberAsArray = line.ToArray();
-                        totalSafeFloors = (IsFloorSafe(numberAsArray) ? 1 : 0); //One line if
+
+                        //Array numberAsArray = line.ToArray();
+
+                        totalSafeFloors = (IsFloorSafe(line) ? totalSafeFloors++ : totalSafeFloors + 0); //One line if
                     }
                     else
                     {
@@ -69,24 +72,35 @@ namespace Advent_Of_Code_2025.AoC_Day_2
         //Check distance
         //If distance max is met break - IsSafe = false
         //Else continue 
-        private bool IsFloorSafe(Array layer)
+        private bool IsFloorSafe(string line)
         {
             int lead = 0;
             int tail = 0;
             int maxDistanceAllowed = 3;
             int distance = 0;
-            int arrayLen = layer.Length;
+            
 
-            for (int i = 0; i < arrayLen - 1; i++) {
-                lead = (int)layer.GetValue(i)!;
-                tail = (int)layer.GetValue(i + 1)!;
+            //int arrayLen = layer.Length;
 
-                distance = (lead < tail) ? tail - lead : tail - lead; //One line if statement
+            foreach (string number in line.Split(new[] {' ', }, StringSplitOptions.RemoveEmptyEntries)){
+                currentFloorList.Add(number);
+            }
+
+            int lengthForIndex = currentFloorList.Count - 1; //This is to account for the out of bounds index for tail value.
+
+            for (int i = 0; i < lengthForIndex; i++)
+            {
+                lead = int.Parse(currentFloorList[i]);
+                tail = int.Parse(currentFloorList[i+1]);
+
+                distance = (lead < tail) ? tail - lead : lead - tail; //One line if statement
 
                 isSafe = (distance <= maxDistanceAllowed) ? true : false; //One line if 
 
                 if(!isSafe) { break; }
             }
+
+            currentFloorList.Clear(); //Reset the amount of values for each line
             return isSafe;
         }
     }
