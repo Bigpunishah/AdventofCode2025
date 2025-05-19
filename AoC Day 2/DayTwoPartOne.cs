@@ -23,6 +23,8 @@ namespace Advent_Of_Code_2025.AoC_Day_2
      *      c.) search that layer for pass or fail
      *      d.) collect count 
      *  3.) Problem complete?
+     *  
+     *  Error in process: All increasing or all decreasing.
      */
     public class DayTwoPartOne
     {
@@ -34,7 +36,6 @@ namespace Advent_Of_Code_2025.AoC_Day_2
         public void RunDayOnePartOne()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            ReadEachLine();
             Console.WriteLine($"Total safe floors: {ReadEachLine()}"); 
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -52,13 +53,10 @@ namespace Advent_Of_Code_2025.AoC_Day_2
                     string line = inputReader.ReadLine()!;
                     if (line is not null)
                     {
-
-                        //Array numberAsArray = line.ToArray();
-
-                        totalSafeFloors = (IsFloorSafe(line) ? totalSafeFloors++ : totalSafeFloors + 0); //One line if
+                        totalSafeFloors = (IsFloorSafe(line) ? (totalSafeFloors += 1) : (totalSafeFloors += 0)); //One line if
                     }
                     else
-                    {
+                    { //Figure out whats going on here. It says end of data reached twice?
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("End of data reached.");
                         Console.ForegroundColor = ConsoleColor.White;
@@ -99,7 +97,6 @@ namespace Advent_Of_Code_2025.AoC_Day_2
 
                 if(!isSafe) { break; }
             }
-
             currentFloorList.Clear(); //Reset the amount of values for each line
             return isSafe;
         }
