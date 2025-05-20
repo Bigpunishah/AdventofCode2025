@@ -24,7 +24,7 @@ namespace Advent_Of_Code_2025.AoC_Day_2
      *      d.) collect count 
      *  3.) Problem complete?
      *  
-     *  Error in process: All increasing or all decreasing.
+     *  Error in process: All increasing or all decreasing. Missed that portion!
      */
     public class DayTwoPartOne
     {
@@ -35,7 +35,7 @@ namespace Advent_Of_Code_2025.AoC_Day_2
         
         public void RunDayOnePartOne()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"Total safe floors: {ReadEachLine()}"); 
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -56,10 +56,8 @@ namespace Advent_Of_Code_2025.AoC_Day_2
                         totalSafeFloors = (IsFloorSafe(line) ? (totalSafeFloors += 1) : (totalSafeFloors += 0)); //One line if
                     }
                     else
-                    { //Figure out whats going on here. It says end of data reached twice?
-                        Console.ForegroundColor = ConsoleColor.Cyan;
+                    { 
                         Console.WriteLine("End of data reached.");
-                        Console.ForegroundColor = ConsoleColor.White;
                         break;
                     }
                 }
@@ -76,7 +74,6 @@ namespace Advent_Of_Code_2025.AoC_Day_2
             int tail = 0;
             int maxDistanceAllowed = 3;
             int distance = 0;
-            
 
             //int arrayLen = layer.Length;
 
@@ -88,6 +85,7 @@ namespace Advent_Of_Code_2025.AoC_Day_2
 
             for (int i = 0; i < lengthForIndex; i++)
             {
+                if (!allIncreaseOrAllDecrease(line)) { break; }
                 lead = int.Parse(currentFloorList[i]);
                 tail = int.Parse(currentFloorList[i+1]);
 
@@ -98,6 +96,30 @@ namespace Advent_Of_Code_2025.AoC_Day_2
                 if(!isSafe) { break; }
             }
             currentFloorList.Clear(); //Reset the amount of values for each line
+            return isSafe;
+        }
+
+        public bool allIncreaseOrAllDecrease(string line) //all increasing or all decreasing
+        {
+            List<int> ints = new List<int>(); //list to hold (int)string vals
+            bool isSafe = false;
+
+            foreach (string stringInteger in line.Split(new[] { " ", }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                ints.Add(int.Parse(stringInteger));
+            }
+
+            for (int i = 0; i < ints.Count - 2; i++)
+            {
+                int lead = ints[i];
+                int mid = ints[i + 1];
+                int tail = ints[i + 2];
+                bool isIncreasing = lead < mid && mid < tail;
+                bool isDecreasing = lead > mid && mid > tail;
+                isSafe = (isDecreasing || isIncreasing) ? true : false;
+
+                if (!(isIncreasing || isDecreasing)) { isSafe = false; break; }
+            }
             return isSafe;
         }
     }
