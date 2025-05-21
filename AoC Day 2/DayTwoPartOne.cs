@@ -24,14 +24,13 @@ namespace Advent_Of_Code_2025.AoC_Day_2
      *      d.) collect count 
      *  3.) Problem complete?
      *  
-     *  Error in process: All increasing or all decreasing. Missed that portion!
      */
     public class DayTwoPartOne
     {
-        private readonly string _inputData = File.ReadAllText("AoC Day 2\\\\InputData.txt"); //Read incoming data as string
+        public static readonly string inputData = File.ReadAllText("AoC Day 2\\\\InputData.txt"); //Read incoming data as string
         private bool isSafe;
         private int totalSafeFloors = 0;
-        readonly List<int> currentFloorList = [];
+        //private List<int> currentFloorList = [];
         
         public void RunDayOnePartOne()
         {
@@ -42,16 +41,15 @@ namespace Advent_Of_Code_2025.AoC_Day_2
 
         private int ReadEachLine()
         {
-            StringReader inputReader = new(_inputData);
-
-            if (!String.IsNullOrEmpty(_inputData))
+            StringReader inputReader = new(inputData);
+            if (!String.IsNullOrEmpty(inputData))
             {
                 while (true)
                 {
                     string line = inputReader.ReadLine()!;
                     if (line is not null)
                     {
-                        totalSafeFloors = (IsFloorSafe(line) ? (totalSafeFloors += 1) : (totalSafeFloors += 0)); //One line if
+                        totalSafeFloors = (IsFloorSafe(StringToIntList(line)) ? (totalSafeFloors += 1) : (totalSafeFloors += 0)); //One line if
                     }
                     else
                     { 
@@ -62,35 +60,15 @@ namespace Advent_Of_Code_2025.AoC_Day_2
             }
             return totalSafeFloors;
         }
-        
-        private bool IsFloorSafe(string line)
-        {
-            int lead;
-            int tail;
-            int maxDistanceAllowed = 3;
-            int distance;
 
+        public List<int> StringToIntList(string line)
+        {
+            List<int> ints = [];
             foreach (string number in line.Split([' ',], StringSplitOptions.RemoveEmptyEntries))
             {
-                currentFloorList.Add(int.Parse(number));
+                ints.Add(int.Parse(number));
             }
-
-            int lengthForIndex = currentFloorList.Count - 1; //This is to account for the out of bounds index for tail value.
-
-            for (int i = 0; i < lengthForIndex; i++)
-            {
-                if (!AllIncreaseOrAllDecrease(currentFloorList)) { break; }
-                lead = currentFloorList[i];
-                tail = currentFloorList[i + 1];
-
-                distance = (lead < tail) ? tail - lead : lead - tail; //One line if statement
-
-                isSafe = (distance <= maxDistanceAllowed); //One line if 
-
-                if(!isSafe) { break; }
-            }
-            currentFloorList.Clear(); //Reset the amount of values for each line
-            return isSafe;
+            return ints;
         }
 
         public static bool AllIncreaseOrAllDecrease(List<int> ints) //all increasing or all decreasing
@@ -112,10 +90,30 @@ namespace Advent_Of_Code_2025.AoC_Day_2
             }
             return isSafe;
         }
-
-        public void GetDataAsStringForPartTwo()
+        public bool IsFloorSafe(List<int> line)
         {
+            int lead;
+            int tail;
+            int maxDistanceAllowed = 3;
+            int distance;
 
+
+            int lengthForIndex = line.Count - 1; //This is to account for the out of bounds index for tail value.
+
+            for (int i = 0; i < lengthForIndex; i++)
+            {
+                lead = line[i];
+                tail = line[i + 1];
+
+                distance = (lead < tail) ? tail - lead : lead - tail; //One line if statement
+                if (!AllIncreaseOrAllDecrease(line)) { break; }
+
+                isSafe = (distance <= maxDistanceAllowed); //One line if 
+
+                if(!isSafe) { break; }
+            }
+            //line.Clear(); //Reset the amount of values for each line
+            return isSafe;
         }
     }
 }
