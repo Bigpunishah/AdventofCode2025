@@ -26,29 +26,6 @@ namespace Advent_Of_Code_2025.AoC_Day_2
     {
         private List<int> _oneFloorRemoved = [];
 
-        public static bool AllIncreaseOrAllDecrease(List<int> list) //all increasing or all decreasing
-        {
-            bool isSafe = false;
-
-            for (int i = 0; i < list.Count - 2; i++)
-            {
-                int lead = list[i];
-                int mid = list[i + 1];
-                int tail = list[i + 2];
-                bool isIncreasing = lead < mid && mid < tail;
-                bool isDecreasing = lead > mid && mid > tail;
-                isSafe = (isDecreasing || isIncreasing);
-
-                if (!(isIncreasing || isDecreasing)) { isSafe = false; break; }
-            }
-            return isSafe;
-        }
-        //public List<int> ReturnOneFloorMissing(List<int> unSafeLevels, List<int> originalList, int indexToRemove)
-        //{
-        //    //Remove floor indexToRemove
-        //    _oneFloorRemoved = originalList;
-        //    _oneFloorRemoved.RemoveAt(indexToRemove);
-        //    return _oneFloorRemoved;
-        //}//End CheckUnsafeFloor
+        
     }
 }

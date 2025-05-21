@@ -28,10 +28,10 @@ namespace Advent_Of_Code_2025.AoC_Day_2
      */
     public class DayTwoPartOne
     {
-        private string _inputData = string.Empty; //Read incoming data as string
+        private readonly string _inputData = File.ReadAllText("AoC Day 2\\\\InputData.txt"); //Read incoming data as string
         private bool isSafe;
         private int totalSafeFloors = 0;
-        readonly List<string> currentFloorList = [];
+        readonly List<int> currentFloorList = [];
         
         public void RunDayOnePartOne()
         {
@@ -42,9 +42,7 @@ namespace Advent_Of_Code_2025.AoC_Day_2
 
         private int ReadEachLine()
         {
-            _inputData = File.ReadAllText("AoC Day 2\\\\InputData.txt");
             StringReader inputReader = new(_inputData);
-            
 
             if (!String.IsNullOrEmpty(_inputData))
             {
@@ -64,10 +62,7 @@ namespace Advent_Of_Code_2025.AoC_Day_2
             }
             return totalSafeFloors;
         }
-        //Check layer
-        //Check distance
-        //If distance max is met break - IsSafe = false
-        //Else continue 
+        
         private bool IsFloorSafe(string line)
         {
             int lead;
@@ -75,20 +70,18 @@ namespace Advent_Of_Code_2025.AoC_Day_2
             int maxDistanceAllowed = 3;
             int distance;
 
-            //int arrayLen = layer.Length;
-
             foreach (string number in line.Split([' ',], StringSplitOptions.RemoveEmptyEntries))
             {
-                currentFloorList.Add(number);
+                currentFloorList.Add(int.Parse(number));
             }
 
             int lengthForIndex = currentFloorList.Count - 1; //This is to account for the out of bounds index for tail value.
 
             for (int i = 0; i < lengthForIndex; i++)
             {
-                if (!AllIncreaseOrAllDecrease(line)) { break; }
-                lead = int.Parse(currentFloorList[i]);
-                tail = int.Parse(currentFloorList[i+1]);
+                if (!AllIncreaseOrAllDecrease(currentFloorList)) { break; }
+                lead = currentFloorList[i];
+                tail = currentFloorList[i + 1];
 
                 distance = (lead < tail) ? tail - lead : lead - tail; //One line if statement
 
@@ -100,16 +93,10 @@ namespace Advent_Of_Code_2025.AoC_Day_2
             return isSafe;
         }
 
-        public static bool AllIncreaseOrAllDecrease(string line) //all increasing or all decreasing
+        public static bool AllIncreaseOrAllDecrease(List<int> ints) //all increasing or all decreasing
         {
-            List<int> ints = []; //list to hold (int)string vals
             bool isSafe = false;
 
-            foreach (string stringInteger in line.Split([ " ", ], StringSplitOptions.RemoveEmptyEntries))
-            {
-                ints.Add(int.Parse(stringInteger));
-            }
-            //Fix here & remove extra parse? 
             //Work on removal of val in floor checks
 
             for (int i = 0; i < ints.Count - 2; i++)
@@ -124,6 +111,11 @@ namespace Advent_Of_Code_2025.AoC_Day_2
                 if (!(isIncreasing || isDecreasing)) { isSafe = false; break; }
             }
             return isSafe;
+        }
+
+        public void GetDataAsStringForPartTwo()
+        {
+
         }
     }
 }
