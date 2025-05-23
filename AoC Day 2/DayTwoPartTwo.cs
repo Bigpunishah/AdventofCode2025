@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,12 +26,9 @@ namespace Advent_Of_Code_2025.AoC_Day_2
      */
     public class DayTwoPartTwo : DayTwoPartOne
     {
-        private List<int> _oneFloorRemoved = [];
         private const int DayTwoPartOneAnswer = 680;
-        int originalLen;
         private int totalNewSafeFloors;
-        private int previous;
-        private List<int> orginalFloor = [];
+        private List<int> originalFloor = [];
 
         public void DayTwoPartTwoRun()
         {
@@ -45,53 +44,101 @@ namespace Advent_Of_Code_2025.AoC_Day_2
             StringReader inputReader = new(inputData);
             if (!String.IsNullOrEmpty(inputData))
             {
-                while (true)
+                string? line; //string? means the variable can be null. It’s a nullable reference type.It tells the compiler: "I expect that line might be null, and I'm handling it."
+                while ((line = inputReader.ReadLine()) is not null) 
                 {
-                    string line = inputReader.ReadLine()!;
-                    if (line is not null)
-                    {
-                        orginalFloor = StringToIntList(line);
-                        if (!IsFloorSafe(orginalFloor)) //Only concerned about the ones that are not safe.
-                        {
-                            originalLen = orginalFloor.Count; //to know the original len
-                            totalNewSafeFloors = CheckFloorRemoval(orginalFloor, originalLen) ? totalNewSafeFloors + 1 : totalNewSafeFloors + 0;
-                        }
-                        else
-                        {
-                            previous++;
-                        }
-
-                    }
-                    else
-                    {
-                        Console.WriteLine("End of data reached.");
-                        break;
+                    originalFloor = StringToIntList(line);
+                    if (!IsFloorDistanceSafe(originalFloor) || !IsIncreasingOrDecreasingOnly(originalFloor))
+                    {   //Only concerned about the ones that are not safe.
+                        if (CheckFloorRemoval(originalFloor)) totalNewSafeFloors++;
                     }
                 }
+                Console.WriteLine("End of data reached.");
             }
         }
 
-        public bool CheckFloorRemoval(List<int> origLst, int originalLength)
+        //New implementation
+        public bool CheckFloorRemoval(List<int> origLst)
         {
-            int countForIndex = 0;
-            while (countForIndex <= originalLength - 1)
+            for (int countForIndex = 0; countForIndex < origLst.Count; countForIndex++)
             {
-                _oneFloorRemoved = new List<int>(origLst); //reset the list back to the orignal size
-                                            //removing val at index to check
-                _oneFloorRemoved.RemoveAt(countForIndex);
-                if (IsFloorSafe(_oneFloorRemoved))
+                List<int> oneFloorRemoved = new(origLst); // Make a local copy
+                oneFloorRemoved.RemoveAt(countForIndex);
+
+                if (IsFloorDistanceSafe(oneFloorRemoved) && IsIncreasingOrDecreasingOnly(oneFloorRemoved))
                 {
                     return true;
-                }
-                else
-                {
-                    //Not safe, so we continue but add a value for the index
-                    countForIndex++;
-                    //_oneFloorRemoved.Clear();
                 }
             }
             return false;
         }
+
+        //New implementation
+        public bool IsFloorDistanceSafe(List<int> floorToCheckList)
+        {
+            int maxDistanceAllowed = 3;
+            int lengthForIndex = floorToCheckList.Count - 1;
+
+            for (int i = 0; i < lengthForIndex; i++)
+            {
+                int lead = floorToCheckList[i];
+                int tail = floorToCheckList[i + 1];
+                int distance = Math.Abs(lead - tail); //Always returns positive
+
+                if (distance > maxDistanceAllowed)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        //public bool IsFloorDistanceSafe(List<int> floorToCheckList)
+        //{
+        //    int lead;
+        //    int tail;
+        //    int maxDistanceAllowed = 3;
+        //    int distance;
+
+        //    int lengthForIndex = floorToCheckList.Count - 1; //This is to account for the out of bounds index for tail value.
+
+        //    for (int i = 0; i < lengthForIndex; i++)
+        //    {
+        //        lead = floorToCheckList[i];
+        //        tail = floorToCheckList[i + 1];
+
+        //        //if (!AllIncreaseOrAllDecrease(floorToCheckList)) { break; }
+        //        distance = (lead < tail) ? tail - lead : lead - tail; //One line if statement
+
+        //        isSafe = (distance <= maxDistanceAllowed); //One line if 
+
+        //        if (!isSafe) { break; }
+        //    }
+        //    //line.Clear(); //Reset the amount of values for each line
+        //    return isSafe;
+        //}
+
+        //public bool CheckFloorRemoval(List<int> origLst)
+        //{
+        //    int countForIndex = 0;
+        //    while (countForIndex <= origLst.Count - 1)
+        //    {
+        //        _oneFloorRemoved = [.. origLst]; //reset the list back to the orignal size {[.. origLst]; = new List<int>();}
+        //                                         //removing val at index to check
+        //        _oneFloorRemoved.RemoveAt(countForIndex);
+        //        if (IsFloorDistanceSafe(_oneFloorRemoved) && IsIncreasingOrDecreasingOnly(_oneFloorRemoved))
+        //        {
+        //            //Floor distance & The increase pattern is within acceptance.
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            //Not safe or passing criteria - add count to index to check if removal helps.
+        //            countForIndex++;
+        //        }
+        //    }
+        //    return false;
+        //}
 
     }
 }

@@ -71,7 +71,7 @@ namespace Advent_Of_Code_2025.AoC_Day_2
             return ints;
         }
 
-        public static bool AllIncreaseOrAllDecrease(List<int> ints) //all increasing or all decreasing
+        public static bool IsIncreasingOrDecreasingOnly(List<int> ints) //all increasing or all decreasing
         {
             bool isSafe = false;
 
@@ -90,23 +90,22 @@ namespace Advent_Of_Code_2025.AoC_Day_2
             }
             return isSafe;
         }
-        public bool IsFloorSafe(List<int> line)
+        private bool IsFloorSafe(List<int> floorToCheckList)
         {
             int lead;
             int tail;
             int maxDistanceAllowed = 3;
             int distance;
 
-
-            int lengthForIndex = line.Count - 1; //This is to account for the out of bounds index for tail value.
+            int lengthForIndex = floorToCheckList.Count - 1; //This is to account for the out of bounds index for tail value.
 
             for (int i = 0; i < lengthForIndex; i++)
             {
-                lead = line[i];
-                tail = line[i + 1];
+                lead = floorToCheckList[i];
+                tail = floorToCheckList[i + 1];
 
+                if (!IsIncreasingOrDecreasingOnly(floorToCheckList)) { break; }
                 distance = (lead < tail) ? tail - lead : lead - tail; //One line if statement
-                if (!AllIncreaseOrAllDecrease(line)) { break; }
 
                 isSafe = (distance <= maxDistanceAllowed); //One line if 
 

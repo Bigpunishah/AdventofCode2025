@@ -136,7 +136,7 @@ namespace Advent_Of_Code_2025.AoC_Day_1
             int total = 0;
             for(int i = 0; i < left.Count; i++)
             {
-                total += Math.Abs(left[i] - right[i]);
+                total += Math.Abs(left[i] - right[i]); //Always returns positive
             }
             //Console.WriteLine("Returning Total Distance.");
             return total;   
