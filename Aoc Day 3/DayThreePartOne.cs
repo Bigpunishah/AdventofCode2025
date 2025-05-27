@@ -25,36 +25,16 @@ namespace Advent_Of_Code_2025.Aoc_Day_3
 
         public List<int> GetPatternedValsList(string data)
         {
-            string regexpattern = @"[mul(]"; // Wrong - currently only matching chars currently.
+            string regexpattern = @"mul+\(\d+,\d+\)"; 
 
-            foreach(Match match in Regex.Matches(data, regexpattern, RegexOptions.IgnoreCase))
+            foreach(Match match in Regex.Matches(data, regexpattern))
             {
                 Console.WriteLine($"Matches: {match.Value}");
+                //Try to print one val then move from there.
+                
 
             }
             return new List<int>();
-
-            //Stream Reader Read() method & put the accceptable criteria in a list or array?
-            //Yes - break out the array & ensure its within order.
-            //char[] mulArray = [ 'm', 'u', 'l', '(', ',', ')'];
-            //Array dataArray = data.ToArray();
-
-            //for (int i = 0; i < dataArray.Length; i+=3)
-            //{
-            //    bool hasMChar = dataArray.GetValue(i).Equals(mulArray[0]);
-            //    bool hasUChar = dataArray.GetValue(i + 1).Equals(mulArray[1]);
-            //    bool hasLChar = dataArray.GetValue(i + 2).Equals(mulArray[2]);
-            //    bool hasStrtParen = dataArray.GetValue(i + 3).Equals(mulArray[3]);
-            //    //Mot sure if this the approach I am looking for
-            //    //Maybe look into Regex :)
-
-            //    if (hasMChar && hasUChar && hasLChar && hasStrtParen)
-            //    { // Close enough to validate :)
-
-            //    }
-            //}
-
-
         }
 
 
