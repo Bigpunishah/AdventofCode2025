@@ -19,7 +19,7 @@ namespace Advent_Of_Code_2025.Aoc_Day_3
         //2.) Find the pattern & save the pattern entirely then read?
         public void DayThreePartOneRun()
         {
-            string inputData = File.ReadAllText("AoC Day 3\\InputData.txt"); //Get data
+            string inputData = File.ReadAllText("Aoc Day 3\\InputData.txt"); //Get data
             List<int> PatternedValuesList = GetPatternedValsList(inputData); //Get data as list in readable format for equation
             int total = GetTotal(PatternedValuesList);
             Console.WriteLine($"mul(x,y) total: {total}");
@@ -28,12 +28,12 @@ namespace Advent_Of_Code_2025.Aoc_Day_3
         {
             try
             {
-                string inputDat = File.ReadAllText("AoC Day Three\\InputData.txt");
+                string inputDat = File.ReadAllText("AoC Day 3\\InputData.txt");
                 return inputDat;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message, "Error grabbing file from location - Make sure you edit properties to always copy! :)");
+                Console.WriteLine(ex.Message + " Error grabbing file from location - Make sure you edit properties to always copy! :)");
             }
             return String.Empty;
         }

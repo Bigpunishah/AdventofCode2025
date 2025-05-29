@@ -10,6 +10,7 @@ class AdvOfCode
         //new DayOnePartTwo().RunDayOnePartTwo();
         //new DayTwoPartOne().RunDayOnePartOne();
         //new DayTwoPartTwo().DayTwoPartTwoRun();
-        new DayThreePartOne().DayThreePartOneRun();
+        //new DayThreePartOne().DayThreePartOneRun();
+        new DayThreePartTwo().DayThreePartTwoRun();
     }
 }
