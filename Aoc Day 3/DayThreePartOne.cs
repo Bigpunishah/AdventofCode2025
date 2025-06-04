@@ -64,5 +64,19 @@ namespace Advent_Of_Code_2025.Aoc_Day_3
             }
             return total;
         }
+
+        //Unused method provided by AI after the fact:
+        //public int GetNewTotal(string segment)
+        //{
+        //    int subtotal = 0;
+        //    var mulMatches = Regex.Matches(segment, @"mul\((\d+),(\d+)\)");
+        //    foreach (Match m in mulMatches)
+        //    {
+        //        int a = int.Parse(m.Groups[1].Value);
+        //        int b = int.Parse(m.Groups[2].Value);
+        //        subtotal += a * b;
+        //    }
+        //    return subtotal;
+        //}
     }
 }
