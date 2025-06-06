@@ -11,11 +11,9 @@ namespace Advent_Of_Code_2025.Aoc_Day_4
         public void DayFourPartOneRun()
         {
             List<string> data = GetData();
-            //PrintTotalMatches(data); //Wrong answer
-            PrintTotalMatchesAllDirections(data); //Right asnwer
-
-            //Current answer: 2551 - Wrong, too low.
-            //Right answer - 2573 - AI input.
+            int total = CountAllMatches(data); //Right answer - 2573 - AI input.
+            Console.WriteLine("Total: {0}", total);
+            //PrintTotalMatches(data); //Wrong answer:  2551
         }
 
         public List<string> GetData()
@@ -42,13 +40,6 @@ namespace Advent_Of_Code_2025.Aoc_Day_4
             }
         }
         
-        //Entry method that starts the all-direction word search and prints the total count
-        public void PrintTotalMatchesAllDirections(List<string> data)
-        {
-            int total = CountAllMatches(data);
-            Console.WriteLine("Total Matches found (all directions): {0}", total);
-        }
-
         private int CountAllMatches(List<string> data)
         {
             int totalMatches = 0; // Track the total number of matches found
@@ -59,18 +50,13 @@ namespace Advent_Of_Code_2025.Aoc_Day_4
             foreach (var row in data)
                 if (row.Length > columns) columns = row.Length;
 
-            // Define 8 directions in (rowDelta, colDelta) — conventional grid movement
+            //The 4 directions needed to check (y,x)
             (int, int)[] directions = new (int, int)[]
-            {
-                //(row, col)
+{
                 (0, 1),   // → right
-                (0, -1),  // ← left
                 (1, 0),   // ↓ down
-                (-1, 0),  // ↑ up
-                (-1, -1), // ↖ up-left
-                (-1, 1),  // ↗ up-right
-                (1, -1),  // ↙ down-left
-                (1, 1)    // ↘ down-right
+                (1, 1),   // ↘ down-right
+                (1, -1)   // ↙ down-left
             };
 
             // Also check for the reversed version of the word
@@ -119,7 +105,7 @@ namespace Advent_Of_Code_2025.Aoc_Day_4
             return new string(arr);
         }
 
-        //+++++++++++++++++++++++++++++++++++++++++++My Old Code++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //+++++++++++++++++++++++++++++++++++++++++++My Old Code Not In Use++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         private void PrintTotalMatches(List<string> data)
         {
             int total = 0;
