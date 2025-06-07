@@ -30,16 +30,6 @@ namespace Advent_Of_Code_2025.AoC_Day_4
             int units = 0; // | (y)
             string wordReversed = ReverseString(word); //Word in rev
 
-            ////Define directions to search should be shape of x
-            //(int, int)[] directions = new (int, int)[]
-            //{
-            //    //(y,x)
-            //    (1, 1), //downright
-            //    (1,-1), //downleft
-            //    //(-1, -1), //upleft
-            //    //(-1, 1), //upright
-            //}; 
-
             //Check to ensure the smallest floor is column len
             foreach(string level in data) 
                 if(units < level.Length) units = level.Length;
@@ -49,9 +39,7 @@ namespace Advent_Of_Code_2025.AoC_Day_4
                 for (int unitIndex = 0; unitIndex < units; unitIndex++) 
                 {
                     if(IsXMatch(data, levelIndex, unitIndex, word, wordReversed))
-                        Console.WriteLine($"Level {levelIndex} \nUnit:{unitIndex} \nHas Passed critera");
-
-                    //totalXMatches++;
+                        totalXMatches++;
                 }
             }
             return totalXMatches;
@@ -59,43 +47,28 @@ namespace Advent_Of_Code_2025.AoC_Day_4
 
         public bool IsXMatch(List<string> data, int level, int unit, string word, string wordrev)
         {
-            //if down right is TRUE then.. check down right starting from UNIT+2 
-            int down = 1; //(1, 0) levels
-            int right = 1; //(0, 1) units
-            int left = -1; //(0, -1) units
+            //Check to ensure enough space to work 3x3
+            if (level + 2 >= data.Count || unit + 2 >= data[level].Length)
+                return false;
 
-            //Checking down right
-            for (int i = 0; i < word.Length; i++)
-            {
-                int thelevel = level + down * i; // * 0 = 0
-                int theunit = unit + right * i;
+            //vals as chars
+            char topleft = data[level][unit];
+            char bttmright = data[level + 2][unit + 2];
 
-                if(thelevel < 0 || thelevel >= data.Count) return false; //checking bounds
-                if (theunit < 0 || theunit >= data[thelevel].Length) return false;
+            char mid = data[level + 1][unit + 1];
 
-                //Check to ensure meets criteria
-                if (data[thelevel][theunit] != word[i] && data[thelevel][theunit] != wordrev[i]) return false; 
-            }
+            char topright = data[level][unit + 2];
+            char bttmleft = data[level + 2][unit];
 
-            //Checking down left
-            for (int i = 0; i < word.Length; i++)
-            {
-                unit += 2; //this moves the unit on the floor over by 2 units
-                int thelevel = level + down * i; // * 0 = 0
-                int theunit = unit + left * i;
+            //Now check string
+            string diag1 = $"{topleft}{mid}{bttmright}";
+            string diag2 = $"{topright}{mid}{bttmleft}";
+            //Console.WriteLine(checkmatch);
+            //Console.WriteLine(checkmatchrev);
 
-                if (thelevel < 0 || thelevel >= data.Count) return false; //checking bounds
-                if (theunit < 0 || theunit >= data[thelevel].Length) return false;
-
-                //Check to ensure meets criteria
-                if (data[thelevel][theunit] != word[i] && data[thelevel][theunit] != wordrev[i]) return false;
-            }
-
-            //If it made it thus far: Pass :)
-            return true;
+            if ((diag1 == word || diag1 == wordrev) && (diag2 == word || diag2 == wordrev))
+                return true;
+            return false;
         }
-
-
-
     }
 }
