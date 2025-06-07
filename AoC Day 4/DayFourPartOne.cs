@@ -69,10 +69,10 @@ namespace Advent_Of_Code_2025.Aoc_Day_4
                 {
                     foreach (var (rowDirection, colDirection) in directions)
                     {
-                        if (IsAreaAMatch(data, rowIndex, columnIndex, rowDirection, colDirection, SearchWord))
+                        if (IsAMatch(data, rowIndex, columnIndex, rowDirection, colDirection, SearchWord))
                             totalMatches++;
 
-                        if (IsAreaAMatch(data, rowIndex, columnIndex, rowDirection, colDirection, reversedWord))
+                        if (IsAMatch(data, rowIndex, columnIndex, rowDirection, colDirection, reversedWord))
                             totalMatches++;
                     }
                 }
@@ -81,12 +81,12 @@ namespace Advent_Of_Code_2025.Aoc_Day_4
         }
 
         // Check if a word exists starting from (row, col) in (rowDelta, colDelta) direction
-        private static bool IsAreaAMatch(List<string> data, int startRow, int startCol, int rowDir, int colDir, string word)
+        private static bool IsAMatch(List<string> data, int rowToSearch, int colToSearch, int rowDir, int colDir, string word)
         {
             for (int i = 0; i < word.Length; i++)
             {
-                int row = startRow + rowDir * i;
-                int col = startCol + colDir * i;
+                int row = rowToSearch + rowDir * i;
+                int col = colToSearch + colDir * i;
 
                 // Check grid boundaries
                 if (row < 0 || row >= data.Count) return false;
@@ -98,7 +98,7 @@ namespace Advent_Of_Code_2025.Aoc_Day_4
         }
 
         //Helper method to reverse the search word
-        private string ReverseString(string s)
+        public string ReverseString(string s)
         {
             char[] arr = s.ToCharArray();
             Array.Reverse(arr);

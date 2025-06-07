@@ -2,6 +2,7 @@
 using Advent_Of_Code_2025.AoC_Day_2;
 using Advent_Of_Code_2025.Aoc_Day_3;
 using Advent_Of_Code_2025.Aoc_Day_4;
+using Advent_Of_Code_2025.AoC_Day_4;
 
 class AdvOfCode
 {
@@ -13,6 +14,7 @@ class AdvOfCode
         //new DayTwoPartTwo().DayTwoPartTwoRun();
         //new DayThreePartOne().DayThreePartOneRun();
         //new DayThreePartTwo().DayThreePartTwoRun();
-        new DayFourPartOne().DayFourPartOneRun();
+        //new DayFourPartOne().DayFourPartOneRun();
+        new DayFourPartTwo().DayFourPartTwoRun();
     }
 }
