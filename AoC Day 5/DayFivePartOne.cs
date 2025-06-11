@@ -13,15 +13,17 @@ namespace Advent_Of_Code_2025.AoC_Day_5
     {
         private string data = string.Empty;
         private List<(int, int)> pageorderingrules = [];
+        private List<string> pageupdates = [];
 
         public void DayFivePartOneRun()
         {
             GetData();
-            //GetPageOrderingRules();
-            CheckPageUpdates();
+            GetPageOrderingRules();
+            GetPageUpdates();
+            IsPageUpdateInOrder();
         }//End DayFivePartOneRun
 
-        public void GetData()
+        void GetData()
         {
             try
             {
@@ -34,7 +36,7 @@ namespace Advent_Of_Code_2025.AoC_Day_5
             }
         }//End GetData
 
-        public void GetPageOrderingRules()
+        private void GetPageOrderingRules()
         {
             string regexpattern = @"\d+\|\d+"; // /d+ one or more number number|number
             if (data is not null)
@@ -57,24 +59,36 @@ namespace Advent_Of_Code_2025.AoC_Day_5
             }
         }//End GetPageOrderingRules
 
-        public void CheckPageUpdates()
+        private List<string> GetPageUpdates()
         {
-            //Pick up here.
-            List<string> pageupdates = [];
-            string regexpattern = @"[^,]";
+            string regexpattern = @"(\d+(?:,\d+)+)"; //int,int,+... ?:, unknwn amnt 
             if (data is not null)
             {
-                //MatchCollection matchs = Regex.Matches(data, regexpattern);
-                //foreach (Match match in matchs)
-                //{
-                //    Console.WriteLine(match.Value);
-                //}
-                foreach (string line in data.Split('\n'))
+                MatchCollection matchs = Regex.Matches(data, regexpattern);
+                foreach (Match match in matchs) 
                 {
-                    Match match = Regex.Match(line, regexpattern);
-                    Console.WriteLine(match.Value);
+                    pageupdates.Add(match.Value);
+                    //Console.WriteLine(match.Value);
                 }
             }
+            return pageupdates;
+        }//End CheckPageUpdates
+
+        private bool IsPageUpdateInOrder()
+        {
+            int totalloops = pageorderingrules.Count;
+            //Check the vals in order
+            for(int i = 0; i < totalloops; i++)
+            {
+                //Pick up here.
+            }
+            return false;
+
+        }//End IsPageUpdateInOrder
+
+        private int GetTotalOfMiddleValue()
+        {
+            throw new NotImplementedException();
         }
     }
 }
